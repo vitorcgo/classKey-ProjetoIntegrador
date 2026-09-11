@@ -1,18 +1,17 @@
 const input = document.getElementById('imagemInput');
 const preview = document.getElementById('preview');
-
-input.addEventListener('change', function() {
-  const file = this.files[0];
-
-  if (file) {
-    const reader = new FileReader();
-
-    reader.addEventListener('load', function() {
-      preview.innerHTML = `<img src="${this.result}" alt="Preview da imagem">`;
-    });
-
-    reader.readAsDataURL(file);
-  } else {
-    preview.innerHTML = '<span>Nenhuma imagem selecionada</span>';
-  }
+function limparPreview() {
+  input.value = '';
+  preview.replaceChildren(Object.assign(document.createElement('span'), { textContent: 'Nenhuma imagem selecionada' }));
+}
+input.addEventListener('change', () => {
+  const file = input.files[0];
+  if (!file) { limparPreview(); return; }
+  if (!file.type.startsWith('image/')) { limparPreview(); ClassKey.message('Selecione um arquivo de imagem.', true, input.closest('form')); return; }
+  const reader = new FileReader();
+  reader.addEventListener('load', () => {
+    const image = document.createElement('img'); image.src = reader.result; image.alt = 'Prévia da imagem selecionada';
+    preview.replaceChildren(image);
+  });
+  reader.readAsDataURL(file);
 });

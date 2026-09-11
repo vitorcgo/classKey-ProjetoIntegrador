@@ -1,349 +1,37 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel Sorteio - Speed Meeting</title>
-    <link rel="stylesheet" href="src/css/login.css">
-    <!-- Importando a biblioteca GSAP para animações -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
-    <!-- Plugin para efeitos mais avançados -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
-    <link rel="icon" href="/src/images/logo-principal.png" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Entrar | ClassKey</title>
+  <link rel="stylesheet" href="src/css/login.css">
+  <link rel="icon" href="src/images/logo-principal.png">
+  <script src="src/javascript/login.js" defer></script>
 </head>
-
 <body>
-    <!-- Tela de carregamento (loading) -->
-    <div id="telaCarregamento">
-        <div class="conteudoCarregamento">
-            <div class="logoCarregamento">
-                <img src="/src/images/logo-principal.png" alt="">
-            </div>
-            <div class="barraProgresso">
-                <div class="preenchimento"></div>
-            </div>
-            <div class="mensagemCarregamento">Carregando sistema...</div>
+  <div class="fundoAnimado" aria-hidden="true"><div class="bolha"></div><div class="bolha"></div><div class="bolha"></div><div class="bolha"></div><div class="bolha"></div></div>
+  <main class="containerLogin">
+    <div class="cartaoLogin">
+      <div class="cabecalhoLogin">
+        <img src="src/images/logo-principal.png" alt="ClassKey" width="64">
+        <h1 class="tituloLogin">ClassKey</h1>
+        <p class="subTituloLogin">Painel administrativo do catálogo de jogos.</p>
+      </div>
+      <form id="formularioLogin" class="formularioLogin">
+        <div class="campoFormulario">
+          <label for="email-admin">E-mail</label>
+          <input type="email" id="email-admin" name="email-admin" placeholder="seu@email.com" autocomplete="username" required>
         </div>
-    </div>
-
-    <!-- Fundo animado com bolhas -->
-    <div class="fundoAnimado">
-        <div class="bolha"></div>
-        <div class="bolha"></div>
-        <div class="bolha"></div>
-        <div class="bolha"></div>
-        <div class="bolha"></div>
-        <div class="bolha"></div>
-        <div class="bolha"></div>
-        <div class="bolha"></div>
-        <div class="bolha"></div>
-        <div class="bolha"></div>
-    </div>
-
-    <!-- Container principal para o formulário de login -->
-    <div class="containerLogin">
-        <div class="cartaoLogin">
-            <div class="cabecalhoLogin">
-                <img src="/src/images/logo-principal.png" alt="">
-                <h1 class="tituloLogin">Painel de Controle<br></h1>
-                <p class="subTituloLogin">Faça login para acessar o sistema</p>
-            </div>
-
-            <form id="formularioLogin" class="formularioLogin" onsubmit="return fazerLogin(event)">
-                <div class="campoFormulario">
-                    <label for="email">Usuário</label>
-                    <input type="email" id="email-admin" name="usuario" placeholder="Digite seu nome de usuário">
-                </div>
-
-                <div class="campoFormulario">
-                    <label for="senha">Senha</label>
-                    <input type="password" id="senha-admin" name="senha" placeholder="Digite sua senha">
-                </div>
-                <div id="mensagem-erro" style="color: red; margin-bottom: 10px; display: none;"></div>
-
-                <button type="submit" class="botaoEntrar">Entrar</button>
-            </form>
-            <br>
-            <br>
-            <div class="rodapeLogin">
-                <p>Sistema de Login &copy; 2025</p>
-            </div>
+        <div class="campoFormulario">
+          <label for="senha-admin">Senha</label>
+          <input type="password" id="senha-admin" name="senha-admin" placeholder="Digite sua senha" autocomplete="current-password" required>
         </div>
+        <p id="mensagem-erro" role="alert" hidden></p>
+        <button type="submit" class="botaoEntrar">Entrar</button>
+      </form>
+      <div class="rodapeLogin"><p>ClassKey · Painel administrativo</p></div>
+      <noscript>Ative o JavaScript no navegador para entrar no painel.</noscript>
     </div>
-
-    </form>
-
-    <script>
-        // Adição do script para integrar o login com o backend PHP
-        document.addEventListener('DOMContentLoaded', function () {
-            const formularioLogin = document.getElementById('formularioLogin');
-
-            formularioLogin.addEventListener('submit', function (e) {
-                e.preventDefault(); // Prevenir envio padrão do formulário
-
-                const usuario = document.getElementById('usuario').value;
-                const senha = document.getElementById('senha').value;
-
-                if (!usuario || !senha) {
-                    // Animação de erro com GSAP
-                    gsap.to('.cartaoLogin', {
-                        x: [-10, 10, -10, 10, 0],
-                        duration: 0.5,
-                        ease: 'power2.inOut'
-                    });
-
-                    alert('Por favor, preencha todos os campos!');
-                    return;
-                }
-
-                // Preparação visual para envio
-                const botao = document.querySelector('.botaoEntrar');
-                const textoOriginal = botao.textContent;
-
-                botao.textContent = "Processando...";
-                botao.disabled = true;
-
-                gsap.to(botao, {
-                    backgroundColor: 'var(--cor-roxo-claro)',
-                    scale: 0.98,
-                    duration: 0.3
-                });
-
-                // Envio dos dados para o backend via AJAX
-                const formData = new FormData();
-                formData.append('usuario', usuario);
-                formData.append('senha', senha);
-            })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.sucesso) {
-                            // Animação de sucesso
-                            gsap.to('.cartaoLogin', {
-                                y: -20,
-                                opacity: 0,
-                                duration: 0.8,
-                                ease: 'power3.inOut',
-                            });
-                        } else {
-                            // Animação de erro
-                            gsap.to('.cartaoLogin', {
-                                x: [-10, 10, -10, 10, 0],
-                                duration: 0.5,
-                                ease: 'power2.inOut'
-                            });
-                        }
-                    })
-                    .catch(erro => {
-                        console.error('Erro:', erro);
-                        alert('Erro ao processar o login. Tente novamente.');
-
-                        // Restaurar estado do botão
-                        botao.textContent = textoOriginal;
-                        botao.disabled = false;
-                        gsap.to(botao, {
-                            backgroundColor: '',
-                            scale: 1,
-                            duration: 0.3
-                        });
-                    });
-            });
-
-    </script>
-
-    <script>
-        // Script principal com animações GSAP e lógica de carregamento
-
-        // Função executada assim que o DOM estiver completamente carregado
-        document.addEventListener('DOMContentLoaded', function () {
-            console.log('Documento pronto! Iniciando animações...');
-
-            // Referências de elementos
-            const telaCarregamento = document.getElementById('telaCarregamento');
-            const barraProgresso = document.querySelector('.preenchimento');
-            const containerLogin = document.querySelector('.containerLogin');
-            const cartaoLogin = document.querySelector('.cartaoLogin');
-            const formularioLogin = document.getElementById('formularioLogin');
-
-            // Iniciar a animação da tela de carregamento
-            iniciarTelaCarregamento();
-
-            // Configuração da animação das bolhas do fundo
-            animarFundo();
-
-            // Função que inicia a animação da tela de carregamento
-            function iniciarTelaCarregamento() {
-                console.log('Iniciando tela de carregamento...');
-
-                // Timeline para a barra de progresso
-                let tlCarregamento = gsap.timeline({
-                    onComplete: terminarCarregamento
-                });
-
-                // Animação da barra de progresso
-                tlCarregamento.to(barraProgresso, {
-                    width: '100%',
-                    duration: 2.5,
-                    ease: 'power2.inOut'
-                });
-
-                // Adicionar pequenos pulsos na logo durante o carregamento
-                gsap.to('.logoCarregamento', {
-                    scale: 1.05,
-                    duration: 0.8,
-                    repeat: -1,
-                    yoyo: true
-                });
-            }
-
-            // Função executada ao terminar o carregamento
-            function terminarCarregamento() {
-                console.log('Carregamento completo, exibindo tela de login...');
-
-                // Timeline para animação de saída da tela de carregamento
-                let tlSaida = gsap.timeline({
-                    onComplete: mostrarLogin
-                });
-
-                // Animação de saída da tela de carregamento
-                tlSaida.to(telaCarregamento, {
-                    opacity: 0,
-                    duration: 0.8,
-                    ease: 'power2.inOut'
-                });
-            }
-
-            // Função para mostrar a tela de login
-            function mostrarLogin() {
-                console.log('Mostrando formulário de login...');
-                // Esconder completamente a tela de carregamento
-                telaCarregamento.style.display = 'none';
-
-                // Tornar o container de login visível para poder animar
-                gsap.set(containerLogin, { opacity: 1 });
-
-                // Timeline para a animação de entrada do login
-                let tlLogin = gsap.timeline();
-
-                // Animação de entrada do cartão de login
-                tlLogin.from(cartaoLogin, {
-                    y: 50,
-                    opacity: 0,
-                    duration: 1,
-                    ease: 'elastic.out(1, 0.7)'
-                });
-
-                // Animação dos elementos do formulário
-                tlLogin.from('.cabecalhoLogin', {
-                    opacity: 0,
-                    y: -20,
-                    duration: 0.7,
-                    ease: 'back.out(1.5)'
-                }, "-=0.5");
-
-                tlLogin.from('.campoFormulario', {
-                    opacity: 0,
-                    y: 30,
-                    duration: 0.6,
-                    stagger: 0.2,
-                    ease: 'power2.out'
-                }, "-=0.3");
-
-                tlLogin.from(['.opcoes', '.botaoEntrar', '.rodapeLogin'], {
-                    opacity: 1,
-                    y: 20,
-                    duration: 0.7,
-                    stagger: 0.15,
-                    ease: 'power2.out'
-                }, "-=0.2");
-
-                // Adicionar um brilho especial ao título
-                gsap.to('.tituloLogin', {
-                    textShadow: "0 0 15px rgba(255, 1, 255, 0.3)",
-                    repeat: -1,
-                    yoyo: true,
-                    duration: 1.5
-                });
-            }
-
-            // Função para animar o fundo com as bolhas
-            function animarFundo() {
-                console.log('Animando elementos do fundo...');
-
-                // Reiniciar posições aleatórias para as bolhas
-                document.querySelectorAll('.bolha').forEach(bolha => {
-                    const randomX = Math.random() * 100;
-                    const randomScale = 0.8 + Math.random() * 0.7;
-
-                    gsap.set(bolha, {
-                        x: `${randomX}vw`,
-                        scale: randomScale,
-                    });
-
-                    // Recriar a animação de subir para cada bolha para evitar sobreposição em seus ciclos
-                    gsap.to(bolha, {
-                        y: '-180vh',
-                        rotation: Math.random() * 720 - 360,
-                        duration: 15 + Math.random() * 15,
-                        repeat: -1,
-                        delay: Math.random() * 5,
-                        ease: 'none',
-                        opacity: () => {
-                            return 0.3 + Math.random() * 0.4;
-                        }
-                    });
-                });
-            }
-
-        });
-    </script>
-
-    <script>
-        /**
-         * Função para realizar o login administrativo
-         * @param {Event} event - Evento de submissão do formulário
-         * @returns {boolean} - Sempre retorna false para evitar o envio tradicional do formulário
-         */
-        function fazerLogin(event) {
-            event.preventDefault();
-
-            // Obter valores dos campos
-            const email = document.getElementById('email-admin').value;
-            const senha = document.getElementById('senha-admin').value;
-            const mensagemErro = document.getElementById('mensagem-erro');
-
-            // Limpar mensagens de erro anteriores
-            mensagemErro.style.display = 'none';
-
-            // Enviar requisição para o servidor
-            fetch('src/php/login_admin.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: `email-admin=${encodeURIComponent(email)}&senha-admin=${encodeURIComponent(senha)}`
-            })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.sucesso) {
-                        // Redirecionar para o painel em caso de sucesso
-                        window.location.href = 'index.html';
-                    } else {
-                        // Exibir mensagem de erro
-                        mensagemErro.textContent = data.mensagem;
-                        mensagemErro.style.display = 'block';
-                    }
-                })
-                .catch(err => {
-                    console.error('Erro no login:', err);
-                    mensagemErro.textContent = 'Erro ao tentar fazer login. Tente novamente.';
-                    mensagemErro.style.display = 'block';
-                });
-
-            return false;
-        }
-    </script>
-
+  </main>
 </body>
-
 </html>

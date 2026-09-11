@@ -4,21 +4,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="/src/css/global.css" />
-  <link rel="stylesheet" href="/src/css/modelo.css" />
-  <link rel="stylesheet" href="/src/css/listaprodutos.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.37.0/tabler-icons.min.css" />
-  <link rel="icon" href="/src/images/logo-principal.png" />
-  <link rel="stylesheet" href="css/components/buttons.css">
+  <link rel="stylesheet" href="src/css/global.css" />
+  <link rel="stylesheet" href="src/css/modelo.css" />
+  <link rel="stylesheet" href="src/css/listaprodutos.css">
+  <link rel="stylesheet" href="src/vendor/tabler/tabler-icons.min.css" />
+  <link rel="icon" href="src/images/logo-principal.png" />
+  <link rel="stylesheet" href="src/css/components/buttons.css">
   <title>Produtos | Sistema de Gerenciamento</title>
+  <link rel="stylesheet" href="src/css/interface.css">
 </head>
 
 <body>
   <div class="principalcontainer">
-    <!-- MENU LATERAL REDESENHADO -->
-    <aside class="aside">
+
+    <aside class="aside" id="menu-lateral" aria-label="Menu principal">
       <div class="cont-aside">
-        <h1>Painel de Controle</h1>
+        <a class="classkey-brand" href="index.html"><img src="src/images/logo-principal.png" alt=""><span>ClassKey</span></a><p class="sidebar-caption">Painel administrativo</p>
 
         <div class="flex-menu-aside">
           <i class="ti ti-layout-dashboard"></i>
@@ -82,23 +83,20 @@
     </aside>
 
 
-    <!-- CONTEÚDO CENTRAL REDESENHADO -->
+
     <section class="aside-direito">
 
-      <!-- TOPO REDESENHADO-->
+
       <header id="menu">
         <div class="flex-ok">
-          <i class="ti ti-menu-2" style="font-size: 24px; cursor: pointer;"></i>
+          <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-controls="menu-lateral" aria-expanded="false"><i class="ti ti-menu-2" aria-hidden="true"></i></button>
           <h3 id="nome-usuario">
             Bem-vindo, <strong>Administrador</strong>
           </h3>
         </div>
         <div class="flex" style="align-items: center; gap: 20px;">
-          <div class="search-container">
-            <i class="ti ti-search"></i>
-            <input type="text" placeholder="Pesquisar..." class="search-input">
-          </div>
-          <i class="ti ti-bell" style="font-size: 20px; cursor: pointer;"></i>
+
+
           <a href="src/php/logout.php" class="logout-btn">
             <i class="ti ti-logout"></i>
             <span>Sair</span>
@@ -107,7 +105,7 @@
         </div>
       </header>
 
-      <!-- CONTEÚDO PRINCIPAL REDESENHADO -->
+
       <main class="conteudo">
         <div class="produto-search">
           <h1 class="title-produtos">Lista de Produtos</h1>
@@ -136,59 +134,17 @@
               <th>Ações</th>
             </tr>
           </thead>
-          <tbody id="tabela-produtos">
-            <!-- Linha de exemplo - será substituída pelo JavaScript -->
-            <tr>
-              <td>
-                <div class="produto-imagem">
-                  <i class="ti ti-photo" style="color: var(--text-muted);"></i>
-                </div>
-              </td>
-              <td>Produto Exemplo</td>
-              <td><button class="status-btn verde">Ativo</button></td>
-              <td>Eletrônicos</td>
-              <td>R$ 199,90</td>
-              <td>24</td>
-              <td>#1001</td>
-              <td>
-                <button class="btn-editar"><a href="editarprodutos.html"><i class="ti ti-edit"></i> Editar</a></button>
-                <button class="btn-excluir"><i class="ti ti-trash"></i> Excluir</button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="produto-imagem">
-                  <i class="ti ti-photo" style="color: var(--text-muted);"></i>
-                </div>
-              </td>
-              <td>Produto Indisponível</td>
-              <td><button class="status-btn vermelho">Inativo</button></td>
-              <td>Decoração</td>
-              <td>R$ 89,90</td>
-              <td>0</td>
-              <td>#1002</td>
-              <td>
-                <button class="btn-editar"><a href="editarprodutos.html"><i class="ti ti-edit"></i> Editar</a></button>
-                <button class="btn-excluir"><i class="ti ti-trash"></i> Excluir</button>
-              </td>
-            </tr>
-          </tbody>
+          <tbody id="tabela-produtos"><tr><td colspan="8">Carregando registros...</td></tr></tbody>
         </table>
 
         <!-- Paginação -->
-        <div class="paginacao">
-          <button><i class="ti ti-chevron-left"></i></button>
-          <button class="active">1</button>
-          <button>2</button>
-          <button>3</button>
-          <button><i class="ti ti-chevron-right"></i></button>
-        </div>
+
       </main>
     </section>
   </div>
 
-  <script src="/src/javascript/accordion.js"></script>
-  <script src="/src/javascript/listar_produtos.js"></script>
+  <script src="src/javascript/accordion.js"></script>
+  <script src="src/javascript/listar_produtos.js"></script>
   <script src="src/javascript/usuariologado.js"></script>
 </body>
 

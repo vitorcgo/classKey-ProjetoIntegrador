@@ -4,20 +4,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="/src/css/global.css" />
-  <link rel="stylesheet" href="/src/css/modelo.css" />
-  <link rel="stylesheet" href="/src/css/cadastroadmin.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.37.0/tabler-icons.min.css" />
-  <link rel="icon" href="/src/images/logo-principal.png" />
+  <link rel="stylesheet" href="src/css/global.css" />
+  <link rel="stylesheet" href="src/css/modelo.css" />
+  <link rel="stylesheet" href="src/css/cadastroadmin.css">
+  <link rel="stylesheet" href="src/vendor/tabler/tabler-icons.min.css" />
+  <link rel="icon" href="src/images/logo-principal.png" />
   <title>ADM - Cadastro de Administradores</title>
+  <link rel="stylesheet" href="src/css/interface.css">
 </head>
 
 <body>
   <div class="principalcontainer">
-    <!-- MENU LATERAL REDESENHADO -->
-    <aside class="aside">
+
+    <aside class="aside" id="menu-lateral" aria-label="Menu principal">
       <div class="cont-aside">
-        <h1>Painel de Controle</h1>
+        <a class="classkey-brand" href="index.html"><img src="src/images/logo-principal.png" alt=""><span>ClassKey</span></a><p class="sidebar-caption">Painel administrativo</p>
 
         <div class="flex-menu-aside">
           <i class="ti ti-layout-dashboard"></i>
@@ -80,23 +81,20 @@
 
     </aside>
 
-    <!-- CONTEÚDO CENTRAL REDESENHADO -->
+
     <section class="aside-direito">
 
-      <!-- TOPO REDESENHADO-->
+
       <header>
         <div class="flex-ok">
-          <i class="ti ti-menu-2" style="font-size: 24px; cursor: pointer;"></i>
+          <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-controls="menu-lateral" aria-expanded="false"><i class="ti ti-menu-2" aria-hidden="true"></i></button>
           <h3 id="nome-usuario">
             Bem-vindo, <strong>Administrador</strong>
           </h3>
         </div>
         <div class="flex" style="align-items: center; gap: 20px;">
-          <div class="search-container">
-            <i class="ti ti-search"></i>
-            <input type="text" placeholder="Pesquisar..." class="search-input">
-          </div>
-          <i class="ti ti-bell" style="font-size: 20px; cursor: pointer;"></i>
+
+
           <a href="src/php/logout.php" class="logout-btn">
             <i class="ti ti-logout"></i>
             <span>Sair</span>
@@ -105,28 +103,28 @@
         </div>
       </header>
 
-      <!-- CONTEÚDO PRINCIPAL REDESENHADO -->
+
       <main class="conteudo">
         <div class="produto-search">
-          <h1 class="title-produtos">Cadastro de Usuario Admin</h1>
+          <h1 class="title-produtos">Cadastro de Administrador</h1>
         </div>
 
         <div
           style="background-color: var(--card-bg); padding: 24px; border-radius: var(--border-radius-lg); box-shadow: var(--shadow-md); border: 1px solid var(--border-color);">
-          <form action="/src/php/cadastrar_admin.php" method="post" class="conteudo-adm">
+          <form action="src/php/cadastrar_admin.php" method="post" class="conteudo-adm">
             <div class="search-container" style="width: 100%; margin-bottom: 16px;">
               <i class="ti ti-mail"></i>
-              <input type="email" name="cadastroadmin" id="cadastroadmin" class="search-input" style="width: 100%"
+              <label for="cadastroadmin" class="sr-only">E-mail do administrador</label><input required autocomplete="username" type="email" name="cadastroadmin" id="cadastroadmin" class="search-input" style="width: 100%"
                 placeholder="E-mail do Administrador">
             </div>
 
             <div class="search-container" style="width: 100%; margin-bottom: 20px;">
               <i class="ti ti-lock"></i>
-              <input type="password" name="passwordadmin" id="passwordadmin" class="search-input" style="width: 100%"
+              <label for="passwordadmin" class="sr-only">Senha do administrador</label><input required autocomplete="new-password" type="password" name="passwordadmin" id="passwordadmin" class="search-input" style="width: 100%"
                 placeholder="Senha do Administrador">
             </div>
 
-            <button type="submit"
+            <button class="btn-quick-primary" type="submit"
               style="padding: 10px 24px; display: flex; gap: 8px; border-radius: 50px; align-items: left;">
               <i class="ti ti-plus"></i>
               <span>Cadastrar</span>
@@ -137,9 +135,8 @@
     </section>
   </div>
 
-  <script src="/src/javascript/accordion.js"></script>
-  <script src="/src/javascript/cadastraradmin.js"></script>
-  <script src="javascript/jquery.min.js"></script>
+  <script src="src/javascript/accordion.js"></script>
+  <script src="src/javascript/cadastraradmin.js"></script>
   <script src="src/javascript/usuariologado.js"></script>
 </body>
 

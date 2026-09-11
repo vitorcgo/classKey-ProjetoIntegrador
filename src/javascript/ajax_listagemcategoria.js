@@ -4,10 +4,10 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('src/php/listar_categorias.php')
         .then(res => res.json())
         .then(categorias => {
-            console.log(categorias);
+
             todasAsCategorias = categorias;
             renderizarTabela(categorias);
-            
+
             // Ativa filtro ao digitar
             const barraPesquisa = document.getElementById('barra-pesquisa');
             if (barraPesquisa) {
@@ -24,10 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         })
-        .catch(err => console.error('Erro ao carregar categorias:', err));
+        .catch(err => { const body=document.querySelector('#corpo-tabela'); body.innerHTML='<tr><td colspan="8" class="table-empty">Não foi possível carregar os registros. Recarregue a página.</td></tr>'; ClassKey.table(body); });
 });
 
-// 🔁 Função para renderizar as categorias na tabela
 function renderizarTabela(categorias) {
     const corpoTabela = document.getElementById('corpo-tabela');
     corpoTabela.innerHTML = '';
@@ -38,29 +37,29 @@ function renderizarTabela(categorias) {
     }
 
     categorias.forEach(categoria => {
-        const status = categoria.status ? categoria.status.toUpperCase() : 'ATIVO';
+        const status = ClassKey.status(categoria.status);
         const classeStatus = status === 'ATIVO' ? 'verde' : 'vermelho';
 
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${categoria.categoria_id}</td>
-            <td>${categoria.categoria}</td>
+            <td>${ClassKey.esc(categoria.categoria)}</td>
             <td>
-                <button class="status-btn ${classeStatus}" 
+                <button class="status-btn ${classeStatus}"
                     onclick="toggleStatus(this, ${categoria.categoria_id})">
                     ${status}
                 </button>
             </td>
             <td>
-                <button class="btn-editar">
-                    <a href="editarcategoria.html?id=${categoria.categoria_id}"><i class="ti ti-edit"></i> Editar</a>
-                </button>
+                <a class="btn-editar" href="editarcategoria.html?id=${categoria.categoria_id}"><i class="ti ti-edit"></i> Editar</a>
                 <button class="btn-excluir" data-id="${categoria.categoria_id}"><i class="ti ti-trash"></i> Excluir</button>
             </td>
         `;
         corpoTabela.appendChild(tr);
     });
 
+    if (!categorias.length) corpoTabela.innerHTML = '<tr><td colspan="4" class="table-empty">Nenhum registro encontrado.</td></tr>';
+    ClassKey.table(corpoTabela);
     document.querySelectorAll('.btn-excluir').forEach(btn => {
         btn.addEventListener('click', excluirCategoria);
     });
@@ -100,6 +99,7 @@ function toggleStatus(botao, categoriaId) {
     .then(res => res.text())
     .then(resposta => {
         if (resposta === 'sucesso') {
+            const item=todasAsCategorias.find(c=>String(c.categoria_id)===String(categoriaId)); if(item)item.status=novoStatus;
             botao.textContent = novoStatus;
             botao.classList.toggle('verde');
             botao.classList.toggle('vermelho');

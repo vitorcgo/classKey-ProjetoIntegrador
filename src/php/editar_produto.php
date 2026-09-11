@@ -6,9 +6,9 @@ header('Content-Type: application/json');
 if (
     empty($_POST['produtoId']) ||
     empty($_POST['nome']) ||
-    empty($_POST['preco']) ||
+    !isset($_POST['preco']) || !is_numeric($_POST['preco']) || $_POST['preco'] < 0 ||
     empty($_POST['descricao']) ||
-    empty($_POST['quantidade']) ||
+    !isset($_POST['quantidade']) || filter_var($_POST['quantidade'], FILTER_VALIDATE_INT) === false || $_POST['quantidade'] < 0 ||
     empty($_POST['categoria_id'])
 ) {
     http_response_code(400);
@@ -35,10 +35,10 @@ $categoriaOK = $stmt2->execute([$categoria_id, $id]);
 if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
     $extensao = pathinfo($_FILES['imagem']['name'], PATHINFO_EXTENSION);
     $nomeArquivo = uniqid('produto_', true) . '.' . $extensao;
-    $destino = '../uploads/' . $nomeArquivo;
+    $destino = __DIR__ . '/../images/' . $nomeArquivo;
 
     if (move_uploaded_file($_FILES['imagem']['tmp_name'], $destino)) {
-        $urlImagem = '/src/uploads/' . $nomeArquivo;
+        $urlImagem = 'src/images/' . $nomeArquivo;
 
         // Atualiza ou insere na tabela produto_media
         $check = $pdo->prepare("SELECT * FROM produto_media WHERE produto_id = ?");

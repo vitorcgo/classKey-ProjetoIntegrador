@@ -348,13 +348,29 @@ body {
     .cartaoLogin {
         padding: 25px;
     }
-    
+
     .opcoes {
         flex-direction: column;
         align-items: flex-start;
     }
-    
+
     .lembrarMe {
         margin-bottom: 10px;
     }
 }
+/* O formulário permanece acessível mesmo sem bibliotecas de animação. */
+body { background:#111827;min-height:100vh;height:auto;overflow-y:auto; }
+.containerLogin { position:relative;min-height:100dvh;height:auto;opacity:1;padding:32px 20px; }
+.cartaoLogin { background:#1e293b;border:1px solid rgba(255,255,255,.1);transform:none;box-shadow:0 24px 60px rgba(0,0,0,.25); }
+.cabecalhoLogin img { display:block;max-width:100%;height:auto;margin:0 auto 28px; }
+.tituloLogin { font-size:26px;color:#f9fafb;background:none;-webkit-text-fill-color:initial; }
+.subTituloLogin { color:#c1cada;opacity:1;font-size:15px;line-height:1.5; }
+.fundoAnimado { z-index:0;pointer-events:none; }
+.campoFormulario input { min-height:48px; }
+.campoFormulario input::placeholder { color:#adb8ca; }
+.botaoEntrar { background:#9900ff;box-shadow:none; }
+.botaoEntrar:disabled { opacity:.65;cursor:wait; }
+#mensagem-erro { margin-bottom:18px;padding:12px;border-radius:8px;background:#502533;color:#ffd5dc;font-size:14px;line-height:1.5; }
+[hidden] { display:none !important; }
+:focus-visible { outline:2px solid #c899ff;outline-offset:3px; }
+@media(prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none !important;transition:none !important; } }

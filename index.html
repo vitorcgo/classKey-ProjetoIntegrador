@@ -4,20 +4,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="/src/css/global.css" />
-  <link rel="stylesheet" href="/src/css/modelo.css" />
-  <link rel="stylesheet" href="/src/css/painel.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.37.0/tabler-icons.min.css" />
+  <link rel="stylesheet" href="src/css/global.css" />
+  <link rel="stylesheet" href="src/css/modelo.css" />
+  <link rel="stylesheet" href="src/css/painel.css">
+  <link rel="stylesheet" href="src/vendor/tabler/tabler-icons.min.css" />
   <title>Dashboard Admin | Sistema de Gerenciamento</title>
+  <link rel="stylesheet" href="src/css/interface.css">
 </head>
 
 <body>
 
   <div class="principalcontainer">
-    <!-- MENU LATERAL REDESENHADO -->
-    <aside class="aside">
+
+    <aside class="aside" id="menu-lateral" aria-label="Menu principal">
       <div class="cont-aside">
-        <h1>Painel de Controle</h1>
+        <a class="classkey-brand" href="index.html"><img src="src/images/logo-principal.png" alt=""><span>ClassKey</span></a><p class="sidebar-caption">Painel administrativo</p>
 
         <div class="flex-menu-aside">
           <i class="ti ti-layout-dashboard"></i>
@@ -81,23 +82,20 @@
     </aside>
 
 
-    <!-- CONTEÚDO CENTRAL REDESENHADO -->
+
     <section class="aside-direito">
 
-      <!-- TOPO REDESENHADO-->
+
       <header id="menu">
         <div class="flex-ok">
-          <i class="ti ti-menu-2" style="font-size: 24px; cursor: pointer;"></i>
+          <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-controls="menu-lateral" aria-expanded="false"><i class="ti ti-menu-2" aria-hidden="true"></i></button>
           <h3 id="nome-usuario">
             Bem-vindo, <strong>Administrador</strong>
           </h3>
         </div>
         <div class="flex" style="align-items: center; gap: 20px;">
-          <div class="search-container">
-            <i class="ti ti-search"></i>
-            <input type="text" placeholder="Pesquisar..." class="search-input">
-          </div>
-          <i class="ti ti-bell" style="font-size: 20px; cursor: pointer;"></i>
+
+
           <a href="src/php/logout.php" class="logout-btn">
             <i class="ti ti-logout"></i>
             <span>Sair</span>
@@ -106,60 +104,48 @@
         </div>
       </header>
 
-      <!-- CONTEÚDO PRINCIPAL REDESENHADO -->
+
       <main class="conteudo">
         <!-- Dashboard Header -->
         <div class="dashboard-header">
           <h1>Painel de Controle</h1>
           <div class="date-display">
             <i class="ti ti-calendar"></i>
-            <span id="current-date">30 de Maio, 2025</span>
+            <span id="current-date"></span>
           </div>
         </div>
 
-        <!-- Cards de resumo - Redesenhados -->
+
         <div class="dashboard-cards">
           <div class="card">
             <h2>Total de Produtos Cadastrados</h2>
             <h3 id="totalProdutos"></h3>
-            <p>
-              <i class="ti ti-arrow-up-right trend-up"></i>
-              <span class="trend-up">+5% esta semana</span>
-            </p>
+
           </div>
           <div class="card">
             <h2>Total de Categorias</h2>
             <h3 id="totalCategorias"></h3>
-            <p>
-              <i class="ti ti-arrow-down-right trend-down"></i>
-            </p>
+
           </div>
           <div class="card">
             <h2>Total de Administradores</h2>
             <h3 id="totalAdministradores"></h3>
-            <p>
-              <i class="ti ti-arrow-up-right trend-up"></i>
-            </p>
+
           </div>
         </div>
 
-        <!-- Gráfico de Vendas - Redesenhado com filtro de período -->
+
         <div class="grafico-container">
           <h3>
-            Desempenho de Vendas
-            <div class="period-selector">
-              <span class="period-option">Dia</span>
-              <span class="period-option active">Semana</span>
-              <span class="period-option">Mês</span>
-              <span class="period-option">Ano</span>
-            </div>
+            Estoque por categoria
+
           </h3>
           <div>
-            <canvas id="graficoVendas"></canvas>
+            <canvas id="graficoVendas" role="img" aria-label="Quantidade de produtos em estoque por categoria"></canvas><p id="grafico-vazio" hidden>Nenhum produto cadastrado.</p>
           </div>
         </div>
 
-        <!-- Atalhos rápidos - Redesenhados com ícones -->
+
         <div class="atalhos">
           <h3>Ações Rápidas</h3>
           <div class="atalhos-grid">
@@ -182,167 +168,13 @@
           </div>
         </div>
 
-        <!-- Scripts -->
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script>
-          // Formatação da data atual
-          const options = { year: 'numeric', month: 'long', day: 'numeric' };
-          document.getElementById('current-date').textContent = new Date().toLocaleDateString('pt-BR', options);
-
-          // Configuração do gráfico
-          const ctx = document.getElementById('graficoVendas').getContext('2d');
-
-          // Gradiente para background do gráfico
-          const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-          gradient.addColorStop(0, 'rgba(153, 0, 255, 0.3)');
-          gradient.addColorStop(0.8, 'rgba(153, 0, 255, 0.0)');
-
-          new Chart(ctx, {
-            type: 'line',
-            data: {
-              labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
-              datasets: [
-                {
-                  label: 'Vendas',
-                  data: [12, 15, 19, 10, 6, 14, 20],
-                  fill: true,
-                  backgroundColor: gradient,
-                  borderColor: '#9900ff',
-                  tension: 0.4,
-                  borderWidth: 3,
-                  pointBackgroundColor: '#9900ff',
-                  pointBorderColor: '#fff',
-                  pointRadius: 4,
-                  pointHoverRadius: 6,
-                  pointHoverBackgroundColor: '#fff',
-                  pointHoverBorderColor: '#9900ff'
-                }
-              ]
-            },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              interaction: {
-                mode: 'index',
-                intersect: false
-              },
-              plugins: {
-                legend: {
-                  display: false
-                },
-                tooltip: {
-                  backgroundColor: 'rgba(17, 24, 39, 0.8)',
-                  titleColor: '#fff',
-                  bodyColor: '#fff',
-                  borderColor: 'rgba(255, 255, 255, 0.1)',
-                  borderWidth: 1,
-                  padding: 10,
-                  boxPadding: 5,
-                  usePointStyle: true,
-                  callbacks: {
-                    title: function (context) {
-                      return 'Dia: ' + context[0].label;
-                    },
-                    label: function (context) {
-                      return 'Vendas: R$ ' + context.parsed.y * 100;
-                    }
-                  }
-                }
-              },
-              scales: {
-                x: {
-                  grid: {
-                    display: false
-                  },
-                  ticks: {
-                    color: 'rgba(255, 255, 255, 0.7)',
-                    font: {
-                      size: 11
-                    }
-                  }
-                },
-                y: {
-                  grid: {
-                    color: 'rgba(255, 255, 255, 0.05)',
-                    drawBorder: false
-                  },
-                  ticks: {
-                    color: 'rgba(255, 255, 255, 0.7)',
-                    font: {
-                      size: 11
-                    },
-                    callback: function (value) {
-                      return 'R$ ' + value * 100;
-                    }
-                  }
-                }
-              }
-            }
-          });
-
-          // Interação do menu accordion
-          document.addEventListener('DOMContentLoaded', () => {
-            const accordionHeaders = document.querySelectorAll('.accordion-header');
-
-            accordionHeaders.forEach(header => {
-              header.addEventListener('click', () => {
-                const body = header.nextElementSibling;
-                header.classList.toggle('active');
-                body.classList.toggle('open');
-              });
-            });
-
-            // Seletor de período do gráfico
-            const periodOptions = document.querySelectorAll('.period-option');
-            periodOptions.forEach(option => {
-              option.addEventListener('click', () => {
-                periodOptions.forEach(o => o.classList.remove('active'));
-                option.classList.add('active');
-              });
-            });
-          });
-        </script>
-        <script src="src/javascript/usuariologado.js"></script>
-        <script>
-        // A URL do seu script PHP para buscar as contagens
-        const phpApiUrl = 'src/php/get_counts.php'; 
-
-        async function fetchCounts() {
-            try {
-                const response = await fetch(phpApiUrl);
-                
-                if (!response.ok) {
-                    const errorData = await response.json(); // Tenta ler o JSON de erro do PHP
-                    throw new Error(errorData.erro || `Erro de rede ou servidor: ${response.status} ${response.statusText}`);
-                }
-
-                const data = await response.json(); // Pega a resposta JSON
-
-                // Verifica se a resposta contém um erro retornado pelo PHP
-                if (data.erro) {
-                    throw new Error(data.erro);
-                }
-
-                // Atualiza os elementos H3 com os dados recebidos
-                document.getElementById('totalProdutos').textContent = data.totalProdutos !== undefined ? data.totalProdutos : 'N/A';
-                document.getElementById('totalCategorias').textContent = data.totalCategorias !== undefined ? data.totalCategorias : 'N/A';
-                document.getElementById('totalAdministradores').textContent = data.totalAdministradores !== undefined ? data.totalAdministradores : 'N/A';
-
-            } catch (error) {
-                console.error('Erro ao buscar contagens:', error);
-                // Em caso de erro, exibe 'Erro!' ou 'N/A' nos cards
-                document.getElementById('totalProdutos').textContent = 'Erro!';
-                document.getElementById('totalCategorias').textContent = 'Erro!';
-                document.getElementById('totalAdministradores').textContent = 'Erro!';
-            }
-        }
-
-        // Chama a função para buscar e exibir os dados quando a página carregar
-        document.addEventListener('DOMContentLoaded', fetchCounts);
-    </script>
       </main>
     </section>
   </div>
+  <script src="src/vendor/chart.umd.min.js"></script>
+  <script src="src/javascript/accordion.js"></script>
+  <script src="src/javascript/usuariologado.js"></script>
+  <script src="src/javascript/painel.js"></script>
 </body>
 
 </html>

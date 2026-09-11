@@ -4,22 +4,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="/src/css/global.css" />
-  <link rel="stylesheet" href="/src/css/modelo.css" />
-  <link rel="stylesheet" href="/src/css/editarprodutos.css">
-  <link rel="stylesheet" href="/src/css/cadastroprodutos.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.37.0/tabler-icons.min.css" />
-  <link rel="icon" href="/src/images/logo-principal.png" />
+  <link rel="stylesheet" href="src/css/global.css" />
+  <link rel="stylesheet" href="src/css/modelo.css" />
+  <link rel="stylesheet" href="src/css/cadastroprodutos.css">
+  <link rel="stylesheet" href="src/vendor/tabler/tabler-icons.min.css" />
+  <link rel="icon" href="src/images/logo-principal.png" />
 
   <title>ADM - Editar Produtos</title>
+  <link rel="stylesheet" href="src/css/interface.css">
 </head>
 
 <body>
   <div class="principalcontainer">
-    <!-- MENU LATERAL REDESENHADO -->
-    <aside class="aside">
+
+    <aside class="aside" id="menu-lateral" aria-label="Menu principal">
       <div class="cont-aside">
-        <h1>Painel de Controle</h1>
+        <a class="classkey-brand" href="index.html"><img src="src/images/logo-principal.png" alt=""><span>ClassKey</span></a><p class="sidebar-caption">Painel administrativo</p>
 
         <div class="flex-menu-aside">
           <i class="ti ti-layout-dashboard"></i>
@@ -83,22 +83,19 @@
     </aside>
 
 
-    <!-- CONTEÚDO CENTRAL REDESENHADO -->
+
     <section class="aside-direito">
 
-      <!-- TOPO REDESENHADO-->
+
       <header id="menu">
         <div class="flex-ok">
-          <i class="ti ti-menu-2" style="font-size: 24px; cursor: pointer;"></i>
+          <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-controls="menu-lateral" aria-expanded="false"><i class="ti ti-menu-2" aria-hidden="true"></i></button>
           <h3 id="nome-usuario">
             Bem-vindo, <strong>Administrador</strong>
           </h3>
         </div>
         <div class="flex" style="align-items: center; gap: 20px;">
-          <div class="search-container">
-            <input type="text" placeholder="Pesquisar..." class="search-input">
-          </div>
-          <i class="ti ti-bell" style="font-size: 20px; cursor: pointer;"></i>
+
           <a href="src/php/logout.php" class="logout-btn">
             <i class="ti ti-logout"></i>
             <span>Sair</span>
@@ -107,7 +104,7 @@
         </div>
       </header>
 
-      <!-- CONTEÚDO PRINCIPAL REDESENHADO -->
+
       <main class="conteudo">
         <div class="produto-search">
           <h1 class="title-produtos">
@@ -118,7 +115,7 @@
         </div>
 
         <div
-          style="background-color: var(--card-bg); border-radius: var(--border-radius-lg); box-shadow: var(--shadow-md); border: 1px solid var(--border-color);">
+          style="background-color: var(--card-bg); padding: 24px; border-radius: var(--border-radius-lg); box-shadow: var(--shadow-md); border: 1px solid var(--border-color);">
 
           <form id="form-produto" action="" method="POST" enctype="multipart/form-data"
             class="conteudo-cadastro-produtos">
@@ -136,13 +133,13 @@
               <div class="input-group">
                 <label for="preco">Preço</label>
                 <div class="search-container" style="width: 100%">
-                  <input type="number" step="0.01" name="preco" id="preco" class="search-input"
+                  <input type="number" step="0.01" min="0" name="preco" id="preco" class="search-input"
                     placeholder="Digite o valor do produto" required>
                 </div>
               </div>
 
               <div class="input-group">
-                <label for="categoria_id">Categoria</label>
+                <label for="categoria-options">Categoria</label>
                 <div class="search-container" style="width: 100%">
                   <select name="categoria_id" id="categoria-options" class="search-input" required>
                     <option value="">Escolha a Categoria</option>
@@ -153,7 +150,7 @@
               <div class="input-group">
                 <label for="quantidade">Quantidade</label>
                 <div class="search-container" style="width: 100%">
-                  <input type="number" name="quantidade" id="quantidade" class="search-input"
+                  <input type="number" min="0" step="1" name="quantidade" id="quantidade" class="search-input"
                     placeholder="Digite a quantidade disponível" required>
                 </div>
               </div>
@@ -161,8 +158,8 @@
               <div class="input-group">
                 <label for="descricao">Descrição</label>
                 <div class="search-container" style="width: 100%">
-                  <input type="text" name="descricao" id="descricao" class="search-input input-descricao"
-                    placeholder="Digite uma descrição para o produto" required>
+                  <textarea name="descricao" id="descricao" class="search-input input-descricao"
+                    placeholder="Digite uma descrição para o produto" required></textarea>
                 </div>
               </div>
 
@@ -202,12 +199,11 @@
     </section>
   </div>
 
-  <script src="/src/javascript/limparformulario.js"></script>
-  <script src="/src/javascript/filereader.js"></script>
-  <script src="/src/javascript/accordion.js"></script>
-  <script src="/src/javascript/categorias.js"></script>
-  <script src="/src/javascript/editar_produto.js"></script>
-  <script src="javascript/jquery.min.js"></script>
+  <script src="src/javascript/limparformulario.js"></script>
+  <script src="src/javascript/filereader.js"></script>
+  <script src="src/javascript/accordion.js"></script>
+  <script src="src/javascript/categorias.js"></script>
+  <script src="src/javascript/editar_produto.js"></script>
   <script src="src/javascript/usuariologado.js"></script>
 </body>
 

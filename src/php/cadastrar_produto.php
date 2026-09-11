@@ -30,4 +30,4 @@ if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
     }
 }
 
-echo "<script>alert('Produto cadastrado com sucesso!'); location.href='/src/listadeprodutos.html';</script>";
+echo "<script>alert('Produto cadastrado com sucesso!'); location.href='../../listadeprodutos.html';</script>";

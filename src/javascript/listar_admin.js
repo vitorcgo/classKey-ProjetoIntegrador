@@ -5,24 +5,25 @@ document.addEventListener('DOMContentLoaded', () => {
             const tbody = document.querySelector('#tabela-adm tbody');
             tbody.innerHTML = ''; // Limpa a tabela antes de adicionar os novos dados
 
+            if (!Array.isArray(admins)) throw new Error('Resposta inválida');
             admins.forEach(admin => {
                 // Formatar as datas para exibição
-                const dataCriacao = admin.data_criacao ? new Date(admin.data_criacao).toLocaleString() : '---';
-                const dataUltimoAcesso = admin.data_ultimo_acesso ? new Date(admin.data_ultimo_acesso).toLocaleString() : '---';
-                
+                const dataCriacao = admin.data_criacao ? new Date(admin.data_criacao.replace(' ', 'T')).toLocaleString('pt-BR') : '---';
+                const dataUltimoAcesso = admin.data_ultimo_acesso ? new Date(admin.data_ultimo_acesso.replace(' ', 'T')).toLocaleString('pt-BR') : '---';
+
                 // Garantir que o status seja uma string antes de aplicar toUpperCase
-                const status = (admin.status && typeof admin.status === 'string') ? admin.status.toUpperCase() : 'ATIVO';
+                const status = ClassKey.status(admin.status);
                 const classeStatus = status === 'ATIVO' ? 'verde' : 'vermelho';
 
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>${admin.admin_id}</td>
-                    <td>${admin.usuario}</td>
-                    <td>${admin.senha}</td>
+                    <td>${ClassKey.esc(admin.usuario)}</td>
+
                     <td>${dataCriacao}</td>
                     <td>${dataUltimoAcesso}</td>
                     <td>
-                        <button class="status-btn ${classeStatus}" 
+                        <button class="status-btn ${classeStatus}"
                                onclick="toggleStatus(this, ${admin.admin_id})">
                             ${status}
                         </button>
@@ -32,16 +33,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 tbody.appendChild(tr);
             });
 
+            if (!admins.length) tbody.innerHTML = '<tr><td colspan="5" class="table-empty">Nenhum administrador cadastrado.</td></tr>';
+            ClassKey.table(tbody);
             // Adicionar evento de exclusão para os botões
             document.querySelectorAll('.btn-excluir').forEach(btn => {
                 btn.addEventListener('click', excluirAdmin);
             });
         })
-        .catch(err => console.error('Erro ao carregar administradores:', err));
+        .catch(err => { const body=document.querySelector('#tabela-adm tbody'); body.innerHTML='<tr><td colspan="8" class="table-empty">Não foi possível carregar os registros. Recarregue a página.</td></tr>'; ClassKey.table(body); });
 });
 
 function excluirAdmin(event) {
-    const adminId = event.target.getAttribute('data-id');
+    const adminId = event.target.closest('[data-id]').getAttribute('data-id');
 
     if (!confirm('Tem certeza que deseja excluir este administrador?')) return;
 

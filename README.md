@@ -142,4 +142,3 @@ Este é um projeto acadêmico para estudo e execução local. Embora o login uti
 
 ---
 
-Desenvolvido por [Vitor](https://github.com/vitorcgo) durante o segundo semestre de TSI.
